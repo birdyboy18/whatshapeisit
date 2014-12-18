@@ -38,12 +38,12 @@
     circles[i].update(polarCoords(circle.x,circle.y, circle.r,random(0,360)));
   }
 
-  function connectDots() {
+  function connectDots(dots) {
     ctx.beginPath();
-    for (var i = 0; i < circles.length; i++) {
-      ctx.moveTo(circles[i].x,circles[i].y);
-      for (var j = 0; j < circles.length; j++) {
-        ctx.lineTo(circles[j].x,circles[j].y);
+    for (var i = 0; i < dots.length; i++) {
+      ctx.moveTo(dots[i].x,dots[i].y);
+      for (var j = 0; j < dots.length; j++) {
+        ctx.lineTo(dots[j].x,dots[j].y);
       }
       ctx.fillStyle = 'rgba(190, 222, 77, 0.2)';
       ctx.closePath();
@@ -67,7 +67,7 @@
   }
 
   //draw();
-  connectDots();
+  connectDots(circles);
 
   function polarCoords(x,y,r,angle) {
     return {

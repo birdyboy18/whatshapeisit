@@ -11,7 +11,7 @@
   canvas.setAttribute('height', _window.innerHeight);
   canvas.setAttribute('width', _window.innerWidth);
 
-  var circle = new Circle(ctx,canvas.width/2,canvas.height/2,100,'#BEDE4D');
+  var circle = new Circle(ctx,canvas.width/2,canvas.height/2,100,'#fafafa');
 
   circle.draw();
 
@@ -21,16 +21,36 @@
   var seconds = date.getSeconds();
 
   //make dem triangles
-  var triangles = [];
+  // var triangles = [];
+  //
+  // for (var i = 0; i < 3; i++) {
+  //   triangles[i] = new Triangle(ctx, polarCoords(circle.x,circle.y,circle.r,random(0,360)),polarCoords(circle.x,circle.y,circle.r,random(0,360)),polarCoords(circle.x,circle.y,circle.r,random(0,360)),'rgba(255,255,255,0.6)');
+  // }
+  //
+  // for (var t = 0, l = triangles.length; t < l; t++) {
+  //   triangles[t].draw();
+  // }
 
-  for (var i = 0; i < 3; i++) {
-    triangles[i] = new Triangle(ctx, polarCoords(circle.x,circle.y,circle.r,random(0,360)),polarCoords(circle.x,circle.y,circle.r,random(0,360)),polarCoords(circle.x,circle.y,circle.r,random(0,360)),'rgba(255,255,255,0.6)');
+  //make dem circles
+  var circles = [];
+
+  for (var i = 0; i < 6; i++) {
+    circles[i] = new Circle(ctx,circle.x,circle.y,5);
+    circles[i].update(polarCoords(circle.x,circle.y, circle.r,random(0,360)));
   }
 
-  var triangle = new Triangle(ctx, polarCoords(circle.x,circle.y,circle.r,random(0,360)),polarCoords(circle.x,circle.y,circle.r,random(0,360)),polarCoords(circle.x,circle.y,circle.r,random(0,360)));
+  function connectDots() {
+    ctx.beginPath();
+    for (var i = 0; i < circles.length; i++) {
+      ctx.moveTo(circles[i].x,circles[i].y);
+      for (var j = 0; j < circles.length; j++) {
+        ctx.lineTo(circles[j].x,circles[j].y);
+      }
+      ctx.fillStyle = 'rgba(190, 222, 77, 0.2)';
+      ctx.closePath();
+      ctx.fill();
+    }
 
-  for (var t = 0, l = triangles.length; t < l; t++) {
-    triangles[t].draw();
   }
 
   function draw() {
@@ -48,6 +68,7 @@
   }
 
   //draw();
+  connectDots();
 
   function polarCoords(x,y,r,angle) {
     return {
